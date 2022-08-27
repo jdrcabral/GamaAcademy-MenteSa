@@ -29,6 +29,12 @@ services:
     volumes:
       - mongo_mente_sa:/data/db
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
 volumes:
   postgres_mente_sa:
     external: true
