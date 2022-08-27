@@ -38,7 +38,10 @@ export class User extends BaseEntity {
     @Column("date")
     birthDate!: Date;
 
-    @Column("varchar")
+    @Column({
+        type: "varchar",
+        nullable: true,
+    })
     professionalIdentification!: string;
 
     @Column("bool")
@@ -62,7 +65,7 @@ export class User extends BaseEntity {
     contacts!: Contact[]
 
     @CreateDateColumn()
-    createAt!: Date;
+    createdAt!: Date;
 
     @UpdateDateColumn()
     updatedAt!: Date;
@@ -87,7 +90,7 @@ export class Contact extends BaseEntity {
     user!: User;
 
     @CreateDateColumn()
-    createAt!: Date;
+    createdAt!: Date;
 
     @UpdateDateColumn()
     updatedAt!: Date;
