@@ -1,6 +1,6 @@
 import { 
     Entity, PrimaryGeneratedColumn, BaseEntity, Column,
-    ManyToOne, OneToMany,
+    ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn
 } from "typeorm";
 
 export enum UserRole {
@@ -21,62 +21,74 @@ export enum ContactType {
     EMAIL,
 }
 
-@Entity
+@Entity()
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
 
     @Column("varchar")
-    name: string;
+    name!: string;
 
     @Column("varchar")
-    email: string;
+    email!: string;
 
     @Column("varchar")
-    cpf: string;
+    cpf!: string;
 
     @Column("date")
-    birthDate: Date;
+    birthDate!: Date;
 
     @Column("varchar")
-    professionalIdentification: string;
+    professionalIdentification!: string;
 
-    @Column()
-    isActive: boolean
+    @Column("bool")
+    isActive!: boolean
 
     @Column({
         type: "enum",
         enum: UserRole,
         default: UserRole.PATIENT,
     })
-    role: UserRole;
+    role!: UserRole;
 
     @Column({
         type: "enum",
         enum: Gender,
         default: Gender.OTHER,
     })
-    gender: Gender;
+    gender!: Gender;
 
     @OneToMany(() => Contact, (contact) => contact.user)
-    contacts: Contact[]
+    contacts!: Contact[]
+
+    @CreateDateColumn()
+    createAt!: Date;
+
+    @UpdateDateColumn()
+    updatedAt!: Date;
 }
 
 @Entity()
 export class Contact extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
 
     @Column({
         type: "enum",
         enum: ContactType,
         default: ContactType.PHONE,
     })
-    type: ContactType;
+    type!: ContactType;
 
     @Column("varchar")
-    contact: string;
+    contact!: string;
 
     @ManyToOne(() => User, (user) => user.contacts)
-    user: User
+    user!: User;
+
+    @CreateDateColumn()
+    createAt!: Date;
+
+    @UpdateDateColumn()
+    updatedAt!: Date;
 }
