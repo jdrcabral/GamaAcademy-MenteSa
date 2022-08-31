@@ -21,11 +21,11 @@ export class UserService {
        
         const user = User.create({ ...userOnlyData, isActive: true });
         user.role = UserRole.ADMIN;
+        user.hashUserPassword();
         await user.save()
         const contactsList = await Promise.all(await ContactService.createList(contacts, user));
 
         user.contacts = contactsList;
-        console.log(user.contacts);
         return user;
     }
 
@@ -35,7 +35,13 @@ export class UserService {
         return users;
     }
 
-    public static async retrie(id: string): Promise<User|null> {
+    public static async findOneByEmail(email: string): Promise<User|null> {
+        const user: User|null = await User.findOneBy({ email });
+
+        return user;
+    }
+
+    public static async findById(id: string): Promise<User|null> {
         const user: User|null = await User.findOneBy({ id });
 
         return user;
