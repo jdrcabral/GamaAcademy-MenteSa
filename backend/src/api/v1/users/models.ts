@@ -3,6 +3,8 @@ import {
     ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn
 } from "typeorm";
 
+import { hashPassword, verifyPassword } from '../../../utils/common/passwordHasher';
+
 export enum UserRole {
     ADMIN = "admin",
     PROFESSIONAL = "professional",
@@ -44,6 +46,9 @@ export class User extends BaseEntity {
     })
     professionalIdentification!: string;
 
+    @Column("varchar")
+    password!: string;
+
     @Column("bool")
     isActive!: boolean
 
@@ -69,6 +74,15 @@ export class User extends BaseEntity {
 
     @UpdateDateColumn()
     updatedAt!: Date;
+
+    hashUserPassword() {
+        this.password = hashPassword(this.password);
+    }
+
+    matchUserPassword(password: string) {
+        return verifyPassword(password, this.password);
+    }
+
 }
 
 @Entity()
