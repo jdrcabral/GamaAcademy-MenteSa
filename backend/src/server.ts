@@ -4,9 +4,11 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import ApiV1Router from './api/v1/router';
+import { passportLoader } from './loaders/passportLoader';
 
 const app = express();
 
+passportLoader();
 app.use(express.json());
 const options = {
     definition: {

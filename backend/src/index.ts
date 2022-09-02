@@ -1,12 +1,10 @@
 import app from "./server";
 import { typeormLoader } from './loaders/typeormLoader';
-import { passportLoader } from './loaders/passportLoader';
 import { mongooseLoader } from './loaders/mongooseLoader';
 import { redisLoader } from './loaders/redisLoader';
 
 typeormLoader();
-passportLoader();
-mongooseLoader();
+// mongooseLoader();
 redisLoader();
 
 app.listen(3000, () => {
