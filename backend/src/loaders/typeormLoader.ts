@@ -1,8 +1,6 @@
 import { DataSource } from 'typeorm';
 import path from 'path';
 
-console.log(path.resolve(__dirname, '..', 'v1', 'sessions', 'models.ts'));
-
 export const typeormLoader = async () => {
     const appDataSource = new DataSource({
         type: 'postgres',
@@ -16,7 +14,7 @@ export const typeormLoader = async () => {
             path.resolve(__dirname, '..', 'api', 'v1', 'users', 'models.ts'),
         ],
         synchronize: true,
-        logging: true,
+        logging: false,
     });
 
     await appDataSource.initialize();

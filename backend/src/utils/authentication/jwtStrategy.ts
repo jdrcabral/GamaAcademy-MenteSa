@@ -22,7 +22,7 @@ const JWTStrategy = new JwtStrategy(
         jwtFromRequest: ExtactJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: JWT_SECRET,
     },
-    veirfyJwt
+    veirfyJwt,
 );
 
 export default JWTStrategy;

@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { User } from '../../api/v1/users/models';
 
 export const createToken = (user: User): string => {
@@ -11,8 +11,15 @@ export const createToken = (user: User): string => {
     return token;
 }
 
-export const verifyToken = (token: string): User => {
-    const payload = jwt.verify(token, 'secret') as any;
+export const verifyToken = (token: string): User|null => {
+    let payload;
+    try {
+        payload = jwt.verify(token, 'secrep') as any;
+
+    } catch (JsonWebTokenError) {
+        console.error('Failed to verify token');
+        return null;
+    }
     const user = {
         email: payload.email,
         id: payload.id,
