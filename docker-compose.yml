@@ -12,6 +12,11 @@ services:
       - 5432:5432
     volumes:
       - postgres_mente_sa:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis
@@ -34,6 +39,25 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+  backend:
+    build: ./backend
+    command: npm run dev
+    ports:
+      - 8000:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+
 
 volumes:
   postgres_mente_sa:

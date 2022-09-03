@@ -4,7 +4,7 @@ import path from 'path';
 export const typeormLoader = async () => {
     const appDataSource = new DataSource({
         type: 'postgres',
-        host: 'localhost',
+        host: 'postgres',
         port: 5432,
         username: 'postgres',
         password: 'mypassowrd',
