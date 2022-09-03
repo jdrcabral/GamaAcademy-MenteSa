@@ -2,7 +2,6 @@ import {Request, Response} from 'express';
 import { SessionService } from './services'
 import { User, UserRole } from '../users/models';
 import { Session } from './models';
-import { use } from 'passport';
 
 export class SessionController {
 
@@ -30,6 +29,18 @@ export class SessionController {
         }
 
         response.status(200).send(sessions);
+    }
+
+
+    static async retrieve(request: Request, response: Response) {
+        const { sessionId } = request.params;
+        const session = await SessionService.findById(sessionId);
+
+        if (!session) {
+            return response.status(404).send({ error: 'Session not found' });
+        }
+
+        response.status(200).send(session);
     }
 
     static partialUpdate(request: Request, response: Response) {
