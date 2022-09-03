@@ -17,11 +17,13 @@ const options = {
         title: 'Mente Sa',
         version: '0.0.1',
       },
+      host: `localhost:3000`, // Host (optional)
+      basePath: '/', // Base path (optional)
     },
     apis: [`${__dirname}/api/v1/**/route*.ts`], // files containing annotations as above
 };
 const swaggerSpec = swaggerJSDoc(options);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ApiV1Router(app);
 
 export default app;
